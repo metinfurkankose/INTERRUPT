@@ -1,0 +1,532 @@
+MPASM  5.51                       KES_UYG.ASM   10-9-2018  20:06:26         PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 #include                        <PIC16F877A.INC>
+                      00001         LIST
+                      00002 ; P16F877A.INC  Standard Header File, Version 1.00    Microchip Technology, Inc.
+Message[301]: MESSAGE: (Processor-header file mismatch.  Verify selected processor.)
+                      00400         LIST
+Warning[205]: Found directive in column 1. (__config)
+2007   3F31           00002 __config                        H'3F31'
+                      00003 
+  00000021            00004 BANT            EQU             0X0021
+  00000022            00005 YEDEK_W         EQU             0X0022
+  00000023            00006 YEDEK_STAT      EQU             0X0023
+  00000024            00007 YEDEK_PCL       EQU             0X0024
+  00000025            00008 TMR0_SAYAC      EQU             0X0025
+  00000026            00009 D1                      EQU             0X0026
+  00000027            00010 D2                      EQU             0X0027
+  00000028            00011 D3                      EQU             0X0028
+  00000029            00012 U_DURUM         EQU             0X0029
+                      00013 
+                      00014 
+Warning[205]: Found directive in column 1. (ORG)
+0000                  00015 ORG                             0X0000
+Warning[203]: Found opcode in column 1. (GOTO)
+0000   283D           00016 GOTO                    AYAR
+                      00017 
+Warning[205]: Found directive in column 1. (ORG)
+0004                  00018 ORG                             0X0004
+Warning[203]: Found opcode in column 1. (GOTO)
+0004   280A           00019 GOTO                    KESME
+                      00020 
+Warning[205]: Found directive in column 1. (ORG)
+0009                  00021 ORG                             0X0009
+Warning[203]: Found opcode in column 1. (GOTO)
+0009   2852           00022 GOTO                    MAIN
+                      00023 
+000A                  00024 KESME
+000A   138B           00025         BCF                     INTCON,7                ;HER ÝHTÝMALE KARÞIN GELECEK KESMELERÝ KAPAT
+000B   00A2           00026         MOVWF           YEDEK_W                 ;W'YÝ YEDEKLE
+000C   0803           00027         MOVF            STATUS,W                ;STATUSU W'YE AL
+000D   00A3           00028         MOVWF           YEDEK_STAT              ;STATUSU YEDEKLE
+000E   080A           00029         MOVF            PCLATH,W                ;PCLATH W'YE AL
+000F   00A4           00030         MOVWF           YEDEK_PCL               ;PCLATHI YEDEKLE
+0010   1C06           00031         BTFSS           PORTB,0                 ;EÐER HARÝCÝ KESME GELDÝYSE KONTROLÜ
+Message[305]: Using default destination of 1 (file).
+0011   0AA5           00032         INCF            TMR0_SAYAC              ;TMR0 1S OLANA KADAR SAYMAYA DEVAM
+0012   1806           00033         BTFSC           PORTB,0
+0013   2022           00034         CALL            RB0_INT
+0014   0000           00035         NOP
+0015   1A25           00036         BTFSC           TMR0_SAYAC,4    ;1 Ms ÝÇÝN GEREKLÝ BÝTÝ KONTROL ET 16 OLUNCA
+0016   202C           00037         CALL            TEST
+0017   0000           00038         NOP
+0018   0823           00039         MOVF            YEDEK_STAT,W    ;YEDEKLENMÝÞ STATUS U W YE YÜKLE
+0019   0083           00040         MOVWF           STATUS                  ;STATUS U GERÝ YERÝNE KOY
+001A   0824           00041         MOVF            YEDEK_PCL,W             ;YEDEK  PCLATH I GETÝR W YE YÜKLE
+MPASM  5.51                       KES_UYG.ASM   10-9-2018  20:06:26         PAGE  2
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+001B   008A           00042         MOVWF           PCLATH                  ;PCL I YERÝNE KOY
+001C   0EA2           00043         SWAPF           YEDEK_W,F               ;STATUSUN ÝÇERÝÐÝNÝ BOZMADAN YEDEK W YÝ SWAPLA
+001D   0E22           00044         SWAPF           YEDEK_W,W               ;STATUSUN ÝÇERÝÐÝNÝ BOZMADAN TEKRAR SWAPLAYIP YERÝNE KOY
+001E   110B           00045         BCF                     INTCON,TMR0IF   ;TMR0 BAYRAÐINI ÝNDÝR
+001F   108B           00046         BCF                     INTCON,INTF             ;RB0/INT BAYRAÐINI ÝNDÝR
+0020   178B           00047         BSF                     INTCON,GIE              ;BÜTÜN KESMELERÝ AKTÝF ET
+Warning[203]: Found opcode in column 1. (RETFIE)
+0021   0009           00048 RETFIE                                                  ;KESMEDEN ÇIK
+                      00049 
+0022                  00050 RB0_INT
+0022   1206           00051         BCF                     PORTB,4
+0023   1686           00052         BSF                     PORTB,5
+0024   1706           00053         BSF                     PORTB,6
+0025   1786           00054         BSF                     PORTB,7
+0026   1806           00055         BTFSC           PORTB,0
+0027   2826           00056         GOTO            $-1
+0028   1606           00057         BSF                     PORTB,4
+0029   1286           00058         BCF                     PORTB,5
+002A   0000           00059         NOP
+Warning[203]: Found opcode in column 1. (RETURN)
+002B   0008           00060 RETURN
+                      00061         
+002C                  00062 TEST
+002C   01A5           00063         CLRF            TMR0_SAYAC
+002D   1C08           00064         BTFSS           PORTD,0                 ;ÜRÜNÜN GELÝP GELMEDÝÐÝ KONTROLÜ
+002E   2032           00065         CALL            U_GECIKTI               ;GECÝKTÝYSE
+002F   1808           00066         BTFSC           PORTD,0
+0030   2036           00067         CALL            U_GECIKMEDI             ;GECÝKMEDÝYSE
+Warning[203]: Found opcode in column 1. (RETURN)
+0031   0008           00068 RETURN
+                      00069 
+0032                  00070 U_GECIKTI
+                      00071         
+0032   1429           00072         BSF                     U_DURUM,0
+0033   1306           00073         BCF                     PORTB,6                 ;6.PÝN LEDÝ SÖNDÜR(YEÞÝL)
+0034   1786           00074         BSF                     PORTB,7                 ;7.PÝN LEDÝ YAK(KIRMIZI)
+Warning[203]: Found opcode in column 1. (RETURN)
+0035   0008           00075 RETURN
+                      00076 
+0036                  00077 U_GECIKMEDI
+0036   1029           00078         BCF                     U_DURUM,0
+0037   1706           00079         BSF                     PORTB,6                 ;6.PÝN LEDÝ SÖNDÜR(YEÞÝL)
+0038   1386           00080         BCF                     PORTB,7                 ;7.PÝN LEDÝ YAK(KIRMIZI)
+0039   2059           00081         CALL            DELAY                   ;LED YAKMAK ÝÇÝN GEREKLÝ 0.5S GECÝKME
+003A   1306           00082         BCF                     PORTB,6                 ;6.PÝN LEDÝ YAK(YEÞÝL)
+003B   1786           00083         BSF                     PORTB,7                 ;7.PÝN LEDÝ SÖNDÜR(KIRMIZI)
+Warning[203]: Found opcode in column 1. (RETURN)
+003C   0008           00084 RETURN
+                      00085 
+003D                  00086 AYAR
+003D   0186           00087         CLRF            PORTB
+003E   01A2           00088         CLRF            YEDEK_W
+003F   01A3           00089         CLRF            YEDEK_STAT
+MPASM  5.51                       KES_UYG.ASM   10-9-2018  20:06:26         PAGE  3
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0040   01A4           00090         CLRF            YEDEK_PCL
+0041   01A5           00091         CLRF            TMR0_SAYAC
+0042   01A9           00092         CLRF            U_DURUM
+0043   1683           00093         BSF                     STATUS,RP0              ;BANK1'E GEÇ
+0044   3001           00094         MOVLW           0X01                    ;W'YE PORTB NÝN PÝNLERÝNÝ AYARLAYACAK DEÐERLERÝ ATA
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+0045   0086           00095         MOVWF           TRISB                   ;PORTB NÝN 0.PÝNÝNÝ GÝRÝÞ DÝÐERLERÝNÝ ÇIKIÞ YAP
+0046   3001           00096         MOVLW           0X01                    ;W'YE PORTD NÝN PÝNLERÝNÝ AYARLAYACAK DEÐERLERÝ ATA
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+0047   0088           00097         MOVWF           TRISD                   ;PORTD NÝN SADECE 0.PÝNLERÝNÝ GÝRÝÞ YAP
+0048   3087           00098         MOVLW           B'10000111'             ;BUTTON PULL-UP BAÐLIYSA 7.BÝT 1 PULL-DOWN ÝSE 0---SON 3
+                             BÝT TMR0 ÝÇÝN GEREKLÝ VERÝLER
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+0049   0081           00099         MOVWF           OPTION_REG              ;KESME(HEM TIMER0 HEM DE RB0) ÝÇÝN GEREKLÝ DEÐERLER OPTI
+                            ON_REG KAYDEDÝCÝSÝNE ATA
+004A   3030           00100         MOVLW           B'00110000'
+004B   008B           00101         MOVWF           INTCON                  ;TMR0 VE RB0/INT KESMELERÝ AKTÝF
+004C   1283           00102         BCF                     STATUS,RP0                      ;BANK0'A GEÇ
+004D   1606           00103         BSF                     PORTB,4
+004E   1286           00104         BCF                     PORTB,5
+004F   1306           00105         BCF                     PORTB,6
+0050   1786           00106         BSF                     PORTB,7
+0051   2852           00107         GOTO            MAIN
+                      00108 
+0052                  00109 MAIN
+0052   178B           00110         BSF                     INTCON,7                ;BÜTÜN KESMELERE ÝZÝN VER
+0053   303C           00111         MOVLW           D'60'
+0054   0081           00112         MOVWF           TMR0
+Warning[207]: Found label after column 1. (DONGU)
+0055                  00113         DONGU
+0055   1608           00114                 BSF                     PORTD,4
+0056   1288           00115                 BCF                     PORTD,5
+0057   2855           00116         GOTO            DONGU
+                      00117 
+Warning[203]: Found opcode in column 1. (RETURN)
+0058   0008           00118 RETURN
+                      00119 
+0059                  00120 DELAY                   ;0.5s ÝÇÝN GEREKLÝ GECÝKME
+0059   3054           00121         MOVLW           0X54
+005A   00A6           00122         MOVWF           D1
+Warning[207]: Found label after column 1. (DELAY2)
+005B                  00123         DELAY2
+005B   308A           00124                 MOVLW           0X8A
+005C   00A7           00125                 MOVWF           D2
+Warning[207]: Found label after column 1. (DELAY3)
+005D                  00126                 DELAY3
+005D   3003           00127                         MOVLW           0X03
+005E   00A8           00128                         MOVWF           D3
+Warning[207]: Found label after column 1. (DELAY4)
+005F                  00129                         DELAY4
+Message[305]: Using default destination of 1 (file).
+005F   0BA8           00130                                 DECFSZ          D3
+0060   285F           00131                                 GOTO            DELAY4
+MPASM  5.51                       KES_UYG.ASM   10-9-2018  20:06:26         PAGE  4
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+Message[305]: Using default destination of 1 (file).
+0061   0BA7           00132                                 DECFSZ          D2
+0062   285D           00133                                 GOTO            DELAY3
+Message[305]: Using default destination of 1 (file).
+0063   0BA6           00134                                 DECFSZ          D1
+0064   285B           00135                                 GOTO            DELAY2
+0065   0008           00136         RETURN
+                      00137 
+Warning[205]: Found directive in column 1. (END)
+                      00138 END
+MPASM  5.51                       KES_UYG.ASM   10-9-2018  20:06:26         PAGE  5
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+ACKDT                             00000005
+ACKEN                             00000004
+ACKSTAT                           00000006
+ADCON0                            0000001F
+ADCON1                            0000009F
+ADCS0                             00000006
+ADCS1                             00000007
+ADCS2                             00000006
+ADDEN                             00000003
+ADFM                              00000007
+ADIE                              00000006
+ADIF                              00000006
+ADON                              00000000
+ADRESH                            0000001E
+ADRESL                            0000009E
+AYAR                              0000003D
+BANT                              00000021
+BCLIE                             00000003
+BCLIF                             00000003
+BF                                00000000
+BRGH                              00000002
+C                                 00000000
+C1INV                             00000004
+C1OUT                             00000006
+C2INV                             00000005
+C2OUT                             00000007
+CCP1CON                           00000017
+CCP1IE                            00000002
+CCP1IF                            00000002
+CCP1M0                            00000000
+CCP1M1                            00000001
+CCP1M2                            00000002
+CCP1M3                            00000003
+CCP1X                             00000005
+CCP1Y                             00000004
+CCP2CON                           0000001D
+CCP2IE                            00000000
+CCP2IF                            00000000
+CCP2M0                            00000000
+CCP2M1                            00000001
+CCP2M2                            00000002
+CCP2M3                            00000003
+CCP2X                             00000005
+CCP2Y                             00000004
+CCPR1H                            00000016
+CCPR1L                            00000015
+CCPR2H                            0000001C
+CCPR2L                            0000001B
+CHS0                              00000003
+CHS1                              00000004
+CHS2                              00000005
+CIS                               00000003
+CKE                               00000006
+MPASM  5.51                       KES_UYG.ASM   10-9-2018  20:06:26         PAGE  6
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+CKP                               00000004
+CM0                               00000000
+CM1                               00000001
+CM2                               00000002
+CMCON                             0000009C
+CMIE                              00000006
+CMIF                              00000006
+CREN                              00000004
+CSRC                              00000007
+CVR0                              00000000
+CVR1                              00000001
+CVR2                              00000002
+CVR3                              00000003
+CVRCON                            0000009D
+CVREN                             00000007
+CVROE                             00000006
+CVRR                              00000005
+D                                 00000005
+D1                                00000026
+D2                                00000027
+D3                                00000028
+DATA_ADDRESS                      00000005
+DC                                00000001
+DELAY                             00000059
+DELAY2                            0000005B
+DELAY3                            0000005D
+DELAY4                            0000005F
+DONGU                             00000055
+D_A                               00000005
+EEADR                             0000010D
+EEADRH                            0000010F
+EECON1                            0000018C
+EECON2                            0000018D
+EEDATA                            0000010C
+EEDATH                            0000010E
+EEIE                              00000004
+EEIF                              00000004
+EEPGD                             00000007
+F                                 00000001
+FERR                              00000002
+FSR                               00000004
+GCEN                              00000007
+GIE                               00000007
+GO                                00000002
+GO_DONE                           00000002
+I2C_DATA                          00000005
+I2C_READ                          00000002
+I2C_START                         00000003
+I2C_STOP                          00000004
+IBF                               00000007
+IBOV                              00000005
+INDF                              00000000
+INTCON                            0000000B
+MPASM  5.51                       KES_UYG.ASM   10-9-2018  20:06:26         PAGE  7
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+INTE                              00000004
+INTEDG                            00000006
+INTF                              00000001
+IRP                               00000007
+KESME                             0000000A
+MAIN                              00000052
+NOT_A                             00000005
+NOT_ADDRESS                       00000005
+NOT_BO                            00000000
+NOT_BOR                           00000000
+NOT_DONE                          00000002
+NOT_PD                            00000003
+NOT_POR                           00000001
+NOT_RBPU                          00000007
+NOT_RC8                           00000006
+NOT_T1SYNC                        00000002
+NOT_TO                            00000004
+NOT_TX8                           00000006
+NOT_W                             00000002
+NOT_WRITE                         00000002
+OBF                               00000006
+OERR                              00000001
+OPTION_REG                        00000081
+P                                 00000004
+PCFG0                             00000000
+PCFG1                             00000001
+PCFG2                             00000002
+PCFG3                             00000003
+PCL                               00000002
+PCLATH                            0000000A
+PCON                              0000008E
+PEIE                              00000006
+PEN                               00000002
+PIE1                              0000008C
+PIE2                              0000008D
+PIR1                              0000000C
+PIR2                              0000000D
+PORTA                             00000005
+PORTB                             00000006
+PORTC                             00000007
+PORTD                             00000008
+PORTE                             00000009
+PR2                               00000092
+PS0                               00000000
+PS1                               00000001
+PS2                               00000002
+PSA                               00000003
+PSPIE                             00000007
+PSPIF                             00000007
+PSPMODE                           00000004
+R                                 00000002
+RB0_INT                           00000022
+RBIE                              00000003
+MPASM  5.51                       KES_UYG.ASM   10-9-2018  20:06:26         PAGE  8
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+RBIF                              00000000
+RC8_9                             00000006
+RC9                               00000006
+RCD8                              00000000
+RCEN                              00000003
+RCIE                              00000005
+RCIF                              00000005
+RCREG                             0000001A
+RCSTA                             00000018
+RD                                00000000
+READ_WRITE                        00000002
+RP0                               00000005
+RP1                               00000006
+RSEN                              00000001
+RX9                               00000006
+RX9D                              00000000
+R_W                               00000002
+S                                 00000003
+SEN                               00000000
+SMP                               00000007
+SPBRG                             00000099
+SPEN                              00000007
+SREN                              00000005
+SSPADD                            00000093
+SSPBUF                            00000013
+SSPCON                            00000014
+SSPCON2                           00000091
+SSPEN                             00000005
+SSPIE                             00000003
+SSPIF                             00000003
+SSPM0                             00000000
+SSPM1                             00000001
+SSPM2                             00000002
+SSPM3                             00000003
+SSPOV                             00000006
+SSPSTAT                           00000094
+STATUS                            00000003
+SYNC                              00000004
+T0CS                              00000005
+T0IE                              00000005
+T0IF                              00000002
+T0SE                              00000004
+T1CKPS0                           00000004
+T1CKPS1                           00000005
+T1CON                             00000010
+T1INSYNC                          00000002
+T1OSCEN                           00000003
+T1SYNC                            00000002
+T2CKPS0                           00000000
+T2CKPS1                           00000001
+T2CON                             00000012
+TEST                              0000002C
+TMR0                              00000001
+MPASM  5.51                       KES_UYG.ASM   10-9-2018  20:06:26         PAGE  9
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+TMR0IE                            00000005
+TMR0IF                            00000002
+TMR0_SAYAC                        00000025
+TMR1CS                            00000001
+TMR1H                             0000000F
+TMR1IE                            00000000
+TMR1IF                            00000000
+TMR1L                             0000000E
+TMR1ON                            00000000
+TMR2                              00000011
+TMR2IE                            00000001
+TMR2IF                            00000001
+TMR2ON                            00000002
+TOUTPS0                           00000003
+TOUTPS1                           00000004
+TOUTPS2                           00000005
+TOUTPS3                           00000006
+TRISA                             00000085
+TRISB                             00000086
+TRISC                             00000087
+TRISD                             00000088
+TRISE                             00000089
+TRISE0                            00000000
+TRISE1                            00000001
+TRISE2                            00000002
+TRMT                              00000001
+TX8_9                             00000006
+TX9                               00000006
+TX9D                              00000000
+TXD8                              00000000
+TXEN                              00000005
+TXIE                              00000004
+TXIF                              00000004
+TXREG                             00000019
+TXSTA                             00000098
+UA                                00000001
+U_DURUM                           00000029
+U_GECIKMEDI                       00000036
+U_GECIKTI                         00000032
+W                                 00000000
+WCOL                              00000007
+WR                                00000001
+WREN                              00000002
+WRERR                             00000003
+YEDEK_PCL                         00000024
+YEDEK_STAT                        00000023
+YEDEK_W                           00000022
+Z                                 00000002
+_BODEN_OFF                        00003FBF
+_BODEN_ON                         00003FFF
+_CPD_OFF                          00003FFF
+_CPD_ON                           00003EFF
+_CP_ALL                           00001FFF
+MPASM  5.51                       KES_UYG.ASM   10-9-2018  20:06:26         PAGE 10
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+_CP_OFF                           00003FFF
+_DEBUG_OFF                        00003FFF
+_DEBUG_ON                         000037FF
+_HS_OSC                           00003FFE
+_LP_OSC                           00003FFC
+_LVP_OFF                          00003F7F
+_LVP_ON                           00003FFF
+_PWRTE_OFF                        00003FFF
+_PWRTE_ON                         00003FF7
+_RC_OSC                           00003FFF
+_WDT_OFF                          00003FFB
+_WDT_ON                           00003FFF
+_WRT_1FOURTH                      00003BFF
+_WRT_256                          00003DFF
+_WRT_HALF                         000039FF
+_WRT_OFF                          00003FFF
+_XT_OSC                           00003FFD
+__16F877                          00000001
+__DEBUG                           1
+
+
+MEMORY USAGE MAP ('X' = Used,  '-' = Unused)
+
+0000 : X---X----XXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0040 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXX---------- ----------------
+2000 : -------X-------- ---------------- ---------------- ----------------
+
+All other memory blocks unused.
+
+Program Memory Words Used:    95
+Program Memory Words Free:  8097
+
+
+Errors   :     0
+Warnings :    18 reported,     0 suppressed
+Messages :     8 reported,     0 suppressed
+
+

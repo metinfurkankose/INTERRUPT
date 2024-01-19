@@ -1,0 +1,15 @@
+#include			<PIC16F877A.INC>
+__config			H'3F31'
+
+
+ORG				0X0000
+GOTO			AYAR
+
+AYAR
+
+GOTO			MAIN
+
+ORG				0X0009
+MAIN
+
+END

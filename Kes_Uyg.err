@@ -1,0 +1,26 @@
+Message[301] C:\MICRO\KESME_UYGULAMA\PIC16F877A.INC 37 : MESSAGE: (Processor-header file mismatch.  Verify selected processor.)
+Warning[205] C:\MICRO\KESME_UYGULAMA\KES_UYG.ASM 2 : Found directive in column 1. (__config)
+Warning[205] C:\MICRO\KESME_UYGULAMA\KES_UYG.ASM 15 : Found directive in column 1. (ORG)
+Warning[203] C:\MICRO\KESME_UYGULAMA\KES_UYG.ASM 16 : Found opcode in column 1. (GOTO)
+Warning[205] C:\MICRO\KESME_UYGULAMA\KES_UYG.ASM 18 : Found directive in column 1. (ORG)
+Warning[203] C:\MICRO\KESME_UYGULAMA\KES_UYG.ASM 19 : Found opcode in column 1. (GOTO)
+Warning[205] C:\MICRO\KESME_UYGULAMA\KES_UYG.ASM 21 : Found directive in column 1. (ORG)
+Warning[203] C:\MICRO\KESME_UYGULAMA\KES_UYG.ASM 22 : Found opcode in column 1. (GOTO)
+Message[305] C:\MICRO\KESME_UYGULAMA\KES_UYG.ASM 32 : Using default destination of 1 (file).
+Warning[203] C:\MICRO\KESME_UYGULAMA\KES_UYG.ASM 48 : Found opcode in column 1. (RETFIE)
+Warning[203] C:\MICRO\KESME_UYGULAMA\KES_UYG.ASM 60 : Found opcode in column 1. (RETURN)
+Warning[203] C:\MICRO\KESME_UYGULAMA\KES_UYG.ASM 68 : Found opcode in column 1. (RETURN)
+Warning[203] C:\MICRO\KESME_UYGULAMA\KES_UYG.ASM 75 : Found opcode in column 1. (RETURN)
+Warning[203] C:\MICRO\KESME_UYGULAMA\KES_UYG.ASM 84 : Found opcode in column 1. (RETURN)
+Message[302] C:\MICRO\KESME_UYGULAMA\KES_UYG.ASM 95 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] C:\MICRO\KESME_UYGULAMA\KES_UYG.ASM 97 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] C:\MICRO\KESME_UYGULAMA\KES_UYG.ASM 99 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Warning[207] C:\MICRO\KESME_UYGULAMA\KES_UYG.ASM 113 : Found label after column 1. (DONGU)
+Warning[203] C:\MICRO\KESME_UYGULAMA\KES_UYG.ASM 118 : Found opcode in column 1. (RETURN)
+Warning[207] C:\MICRO\KESME_UYGULAMA\KES_UYG.ASM 123 : Found label after column 1. (DELAY2)
+Warning[207] C:\MICRO\KESME_UYGULAMA\KES_UYG.ASM 126 : Found label after column 1. (DELAY3)
+Warning[207] C:\MICRO\KESME_UYGULAMA\KES_UYG.ASM 129 : Found label after column 1. (DELAY4)
+Message[305] C:\MICRO\KESME_UYGULAMA\KES_UYG.ASM 130 : Using default destination of 1 (file).
+Message[305] C:\MICRO\KESME_UYGULAMA\KES_UYG.ASM 132 : Using default destination of 1 (file).
+Message[305] C:\MICRO\KESME_UYGULAMA\KES_UYG.ASM 134 : Using default destination of 1 (file).
+Warning[205] C:\MICRO\KESME_UYGULAMA\KES_UYG.ASM 138 : Found directive in column 1. (END)

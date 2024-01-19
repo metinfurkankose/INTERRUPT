@@ -1,0 +1,60 @@
+MPLINK 4.49, Linker
+Linker Map File - Created Tue Oct 09 20:06:28 2018
+
+                                 Section Info
+                  Section       Type    Address   Location Size(Bytes)
+                ---------  ---------  ---------  ---------  ---------
+                   .org_0       code   0x000000    program   0x000000
+                   .org_1       code   0x000000    program   0x000002
+                   .org_2       code   0x000004    program   0x000002
+                   .org_3       code   0x000009    program   0x0000ba
+   .config_2007_KES_UYG.O       code   0x002007    program   0x000002
+
+
+
+                              Program Memory Usage 
+                               Start         End      
+                           ---------   ---------      
+                            0x000000    0x000000      
+                            0x000004    0x000004      
+                            0x000009    0x000065      
+                            0x002007    0x002007      
+            96 out of 8454 program addresses used, program memory utilization is 1%
+
+
+
+                              Symbols - Sorted by Name
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                     AYAR   0x00003d    program     static C:\micro\Kesme_Uygulama\Kes_Uyg.asm
+                    DELAY   0x000059    program     static C:\micro\Kesme_Uygulama\Kes_Uyg.asm
+                   DELAY2   0x00005b    program     static C:\micro\Kesme_Uygulama\Kes_Uyg.asm
+                   DELAY3   0x00005d    program     static C:\micro\Kesme_Uygulama\Kes_Uyg.asm
+                   DELAY4   0x00005f    program     static C:\micro\Kesme_Uygulama\Kes_Uyg.asm
+                    DONGU   0x000055    program     static C:\micro\Kesme_Uygulama\Kes_Uyg.asm
+                    KESME   0x00000a    program     static C:\micro\Kesme_Uygulama\Kes_Uyg.asm
+                     MAIN   0x000052    program     static C:\micro\Kesme_Uygulama\Kes_Uyg.asm
+                  RB0_INT   0x000022    program     static C:\micro\Kesme_Uygulama\Kes_Uyg.asm
+                     TEST   0x00002c    program     static C:\micro\Kesme_Uygulama\Kes_Uyg.asm
+              U_GECIKMEDI   0x000036    program     static C:\micro\Kesme_Uygulama\Kes_Uyg.asm
+                U_GECIKTI   0x000032    program     static C:\micro\Kesme_Uygulama\Kes_Uyg.asm
+
+
+
+                              Symbols - Sorted by Address
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                    KESME   0x00000a    program     static C:\micro\Kesme_Uygulama\Kes_Uyg.asm
+                  RB0_INT   0x000022    program     static C:\micro\Kesme_Uygulama\Kes_Uyg.asm
+                     TEST   0x00002c    program     static C:\micro\Kesme_Uygulama\Kes_Uyg.asm
+                U_GECIKTI   0x000032    program     static C:\micro\Kesme_Uygulama\Kes_Uyg.asm
+              U_GECIKMEDI   0x000036    program     static C:\micro\Kesme_Uygulama\Kes_Uyg.asm
+                     AYAR   0x00003d    program     static C:\micro\Kesme_Uygulama\Kes_Uyg.asm
+                     MAIN   0x000052    program     static C:\micro\Kesme_Uygulama\Kes_Uyg.asm
+                    DONGU   0x000055    program     static C:\micro\Kesme_Uygulama\Kes_Uyg.asm
+                    DELAY   0x000059    program     static C:\micro\Kesme_Uygulama\Kes_Uyg.asm
+                   DELAY2   0x00005b    program     static C:\micro\Kesme_Uygulama\Kes_Uyg.asm
+                   DELAY3   0x00005d    program     static C:\micro\Kesme_Uygulama\Kes_Uyg.asm
+                   DELAY4   0x00005f    program     static C:\micro\Kesme_Uygulama\Kes_Uyg.asm
+
+
